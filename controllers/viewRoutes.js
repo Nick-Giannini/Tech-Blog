@@ -20,7 +20,7 @@ router.get('/post/:id', async (req, res) => {
     try {
         const value = req.params.id;
 
-        const post = await Post.find(value,{
+        const post = await Post.findByPk(value,{
             raw:true
         });
         if (!post) {
@@ -64,5 +64,12 @@ router.get('/createPost', async (req, res) => {
     }
 })
 
+// router.get('/dashboard', async (req, res) => {
+//     try {
+//         res.render('dashboard');
+//     } catch (error) {
+//         res.status(500).json(error);
+//     }
+// })
 
 module.exports = router;

@@ -1,5 +1,14 @@
 <div>
-{{title}}
-
-
+<div class="card">
+    <div class="card-body">
+        <article class="post">
+            <div class="d-flex justify-content-between">
+                <h5 class="card-title"><a href="/post/{{id}}">{{title}}</a></h5>
+                <p class="text-muted">Posted By {{'user.username'}} on {{format_date createdAt}}</p>
+            </div>
+            <p class="card-text">{{post_text}}</p>
+        </article>
+    </div>
 </div>
+</div>
+
