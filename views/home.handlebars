@@ -1,0 +1,19 @@
+{{#each allPosts}}
+<div class="card">
+  <div class="card-body">
+    <article class="post">
+      <div class="post-head">
+        <div class="title">
+          <a href="/post/{{id}}">{{title}}</a>
+        </div>
+        <div class="meta">
+          Posted By {{'user.username'}} on {{format_date createdAt}} |
+        </div>
+      </div>
+      <div class="post-text">
+        {{post_text}}
+      </div>
+    </article>
+  </div>
+</div>
+{{/each}}

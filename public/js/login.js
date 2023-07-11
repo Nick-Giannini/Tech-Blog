@@ -14,7 +14,7 @@ const loginFormHandler = async (event) => {
         });
 
         if (response.ok) {
-            document.location.replace('/chat');
+            document.location.replace('/profile');
         } else {
             alert(response.statusText);
         }
@@ -22,5 +22,5 @@ const loginFormHandler = async (event) => {
 };
 
 document
-    .querySelector('#loginBtn')
+    .querySelector('#submitBtn')
     .addEventListener('click', loginFormHandler);
