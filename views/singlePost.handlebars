@@ -1,14 +1,43 @@
-<div>
-<div class="card">
-    <div class="card-body">
-        <article class="post">
-            <div class="d-flex justify-content-between">
-                <h5 class="card-title"><a href="/post/{{id}}">{{title}}</a></h5>
-                <p class="text-muted">Posted By {{'user.username'}} on {{format_date createdAt}}</p>
-            </div>
-            <p class="card-text">{{post_text}}</p>
-        </article>
+<div class="post-container">
+    <div class="card">
+        <div class="card-body">
+            <article class="post">
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title"><a href="/post/{{id}}">{{title}}</a></h5>
+                    <p class="text-muted">Posted By {{user.username}} on {{format_date createdAt}}</p>
+                </div>
+                <p class="card-text">{{post_text}}</p>
+            </article>
+        </div>
     </div>
 </div>
+
+    <form role="form">
+        <div class="form-group">
+            <h5 class="text-center">New Comment</h5>
+            <label for="content"></label>
+            <textarea id="comment_text" name="comment_text" class="form-control" data-post-id="{{id}}"></textarea>
+            <button type="submit" class="btn btn-primary mt-3" id="submitBtn">Create</button>
+        </div>
+    </form>
+
+<h6>Comments:</h6>
+{{#each comments}}
+<div class="comment-container">
+    <div class="card">
+        <div class="card-body">
+            <article class="comment">
+                <div class="d-flex justify-content-between">
+                    <h7>{{comment_text}}</h7>
+                    <p class="text-muted">Commented By {{user.username}} on {{format_date createdAt}}</p>
+                </div>
+                <p class="card-text">{{comment_text}}</p>
+            </article>
+        </div>
+    </div>
 </div>
+{{/each}}
+
+
+<script src="/js/createComment.js"></script>
 

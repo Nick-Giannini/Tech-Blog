@@ -1,13 +1,13 @@
 const router = require('express').Router();
-const { User,Post} = require('../models');
-const auth = require('../utils/auth')
+const { User,Post,Comment} = require('../models');
+const withAuth = require('../utils/auth')
 
 router.get('/', async (req, res) => {
     try {
         const allPosts = await Post.findAll({
             include: {model: User, attributes: ['username']},
             raw: true});
-        console.log(allPosts);
+        // console.log(allPosts);
         res.render('home',{allPosts});
 
     } catch (err) {
@@ -20,14 +20,27 @@ router.get('/post/:id', async (req, res) => {
     try {
         const value = req.params.id;
 
-        const post = await Post.findByPk(value,{
-            raw:true
+        const postInfo = await Post.findByPk(value, {
+            include:[
+                {
+                    model:Comment,
+                    include: [{model: User,attributes: ['username']}],
+                },
+                {
+                    model: User,
+                    attributes: ['username', 'id'],
+                },
+            ],
         });
+
+        const post = postInfo.get({ plain: true });
+
+
         if (!post) {
             res.redirect('/');
 
         }
-        console.log(post);
+        // console.log(post);
         res.render("singlePost",post)
 
     } catch (err) {
@@ -56,7 +69,7 @@ router.get('/signup', async (req, res) => {
     }
 })
 
-router.get('/createPost', async (req, res) => {
+router.get('/createPost', withAuth, async (req, res) => {
     try {
         res.render('createPost');
     } catch (error) {

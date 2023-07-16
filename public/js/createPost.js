@@ -12,10 +12,10 @@ const createPostFormHandler = async (event) => {
         });
 
         if (response.ok) {
-            document.location.replace('/login');
+            document.location.replace('/');
         } else {
-            alert(response.statusText);
-        }
+            const errorMessage = await response.text();
+            alert(`Post creation failed: ${errorMessage}`);  }
     }
 };
 

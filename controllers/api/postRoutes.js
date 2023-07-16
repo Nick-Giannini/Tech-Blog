@@ -3,15 +3,15 @@ const { Post, User, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // get all posts,
-// router.get('/', async (req, res) => {
-//     try {
-//         const allPosts = await Post.findAll();
-//         res.json(allPosts);
+router.get('/', async (req, res) => {
+    try {
+        const allPosts = await Post.findAll();
+        res.json(allPosts);
 
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-// });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
 //get all posts by id
 
@@ -21,6 +21,8 @@ router.get('/:id', async (req, res) => {
         const value = req.params.id;
 
         const allPostsbyUser = await Post.findAll({
+
+
             where: {
                 user_id: value,
             },
@@ -35,7 +37,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     const post = await Post.create({ ...req.body, user_id: req.session.user_id});
 
     return res.json(post);

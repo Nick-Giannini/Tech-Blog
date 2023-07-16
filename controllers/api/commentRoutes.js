@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User,Post,Comment } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 
 
@@ -23,10 +24,23 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
-    const comment = await Comment.create(req.body);
+router.post('/', withAuth,   async (req, res) => {
+    try{
+        // if (!req.session.user_id){
+        //     // res.render('/login')
+        //     res.status(500).json({message:"not logged in"})
+        // }
+        // else{
+        const comment = await Comment.create({
+            comment_text: req.body.comment_text,
+            post_id: req.body.post_id,
+            user_id: req.session.user_id })
+            res.json(comment);
 
-    return res.json(comment);
+}
+catch(err){
+    res.status(500).json(err)
+}
 });
 
 

@@ -15,17 +15,17 @@ try {
 
     const value = req.session.user_id;
     const allPostsbyUser = await Post.findAll({
-        where: {
-            user_id: value,
-        },
+        include: { model: User, attributes: ['username'] },
+        where: {user_id: value},
         raw: true
+
     });
 
     if (!allPostsbyUser[0]) {
         res.status(404)
         return;
     }
-    console.log(allPostsbyUser);
+    // console.log(allPostsbyUser);
     res.render("dashboard", {allPostsbyUser})
     // res.status(200).json(allPostsbyUser);
 
