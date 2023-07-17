@@ -26,11 +26,6 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', withAuth,   async (req, res) => {
     try{
-        // if (!req.session.user_id){
-        //     // res.render('/login')
-        //     res.status(500).json({message:"not logged in"})
-        // }
-        // else{
         const comment = await Comment.create({
             comment_text: req.body.comment_text,
             post_id: req.body.post_id,

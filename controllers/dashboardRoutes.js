@@ -4,12 +4,6 @@ const withAuth = require('../utils/auth')
 
 
 router.get('/', withAuth, async (req, res) => {
-    // try {
-    //     res.render('dashboard');
-    // } catch (error) {
-    //     res.status(500).json(error);
-    // }
-
 
 try {
 
@@ -25,9 +19,7 @@ try {
         res.status(404)
         return;
     }
-    // console.log(allPostsbyUser);
     res.render("dashboard", {allPostsbyUser})
-    // res.status(200).json(allPostsbyUser);
 
     } catch (error) {
         res.status(500).json(error);
