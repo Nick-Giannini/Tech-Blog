@@ -15,10 +15,9 @@ const createPostFormHandler = async (event) => {
             document.location.replace('/');
         } else {
             const errorMessage = await response.text();
-            alert(`Post creation failed: ${errorMessage}`);  }
+            alert(`Post creation failed: ${errorMessage}`);
+        }
     }
 };
 
-document
-    .querySelector('#submitBtn')
-    .addEventListener('click', createPostFormHandler);
+document.querySelector('#submitBtn').addEventListener('click', createPostFormHandler);

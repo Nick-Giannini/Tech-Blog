@@ -1,19 +1,17 @@
 const router = require('express').Router();
-const { User,Post,Comment} = require('../models');
-const withAuth = require('../utils/auth')
+const { User, Post, Comment } = require('../models');
+const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
     try {
         const allPosts = await Post.findAll({
-            include: {model: User, attributes: ['username']},
-            raw: true});
-        // console.log(allPosts);
-        res.render('home',{allPosts});
-
+            include: { model: User, attributes: ['username'] },
+            raw: true
+        });
+        res.render('home', { allPosts });
     } catch (err) {
         res.status(500).json(err);
     }
-
 });
 
 router.get('/post/:id', async (req, res) => {
@@ -21,44 +19,36 @@ router.get('/post/:id', async (req, res) => {
         const value = req.params.id;
 
         const postInfo = await Post.findByPk(value, {
-            include:[
+            include: [
                 {
-                    model:Comment,
-                    include: [{model: User,attributes: ['username']}],
+                    model: Comment,
+                    include: [{ model: User, attributes: ['username'] }]
                 },
                 {
                     model: User,
-                    attributes: ['username', 'id'],
-                },
-            ],
+                    attributes: ['username', 'id']
+                }
+            ]
         });
 
         const post = postInfo.get({ plain: true });
 
-
         if (!post) {
             res.redirect('/');
-
         }
-        // console.log(post);
-        res.render("singlePost",post)
-
+        res.render('singlePost', post);
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
     }
-
 });
-
-
 
 router.get('/login', async (req, res) => {
     try {
-
         res.render('login');
     } catch (error) {
-        res.status(500).json(error)
-    };
+        res.status(500).json(error);
+    }
 });
 
 router.get('/signup', async (req, res) => {
@@ -67,7 +57,7 @@ router.get('/signup', async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-})
+});
 
 router.get('/createPost', withAuth, async (req, res) => {
     try {
@@ -75,7 +65,6 @@ router.get('/createPost', withAuth, async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-})
-
+});
 
 module.exports = router;
